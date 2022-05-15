@@ -1,18 +1,18 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
-#include <QDialog>
+#include <QMainWindow>
 
 namespace Ui {
 class Canvas;
 }
 
-class Canvas : public QDialog
+class Canvas : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit Canvas(QWidget *parent = nullptr);
+    explicit Canvas(QWidget *parent, int width, int height);
     ~Canvas();
 
 private:

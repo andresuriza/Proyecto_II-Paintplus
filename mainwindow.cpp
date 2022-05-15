@@ -17,9 +17,7 @@ void MainWindow::on_pushButton_clicked()
     int heightVal = this->ui->heightTextEdit->text().toInt();
     int widthVal = this->ui->widthTextEdit->text().toInt();
 
-    this->close();
-    Canvas canvas;
-    canvas.setModal(false);
-    canvas.show();
-    canvas.exec();
+    Canvas *canvas = new Canvas(nullptr, heightVal, widthVal);
+    canvas->show();
+    hide();
 }
