@@ -116,46 +116,101 @@ public:
     }
 };
 
-/*
-    auto* outputFileName = (string *) "creeper.bmp";
+class Painter
+{
+private:
+    int width;
+    int height;
+    int rows;
+    uint8_t black[3] = {0, 0, 0};
+    uint8_t white[3] = {255, 255, 255};
+    uint8_t red[3] = {255, 0, 0};
+    uint8_t green[3] = {0, 255, 0};
+    uint8_t blue[3] = {0, 0, 255};
+    uint8_t orange[3] = {255, 165, 0};
+    uint8_t yellow[3] = {255, 255, 0};
+    uint8_t** rgbMatrix;
 
-    uint8_t rbgMatrix[36][3] = {
-            {0, 0, 0}, {0,0, 0},{0,0,0},
-            {0,0,0}, {0,0,0}, {0,0,0},
-            {0,0,0}, {0,0,0}, {0,0,0},
-            {0,0,0}, {0,0,0}, {0,0,0},
-            {0,0,0}, {0,0,0}, {0,0,0},
-            {0,0,0}, {0,0,0}, {0,0,0},
-            {0,0,0}, {0,0,0}, {0,0,0},
-            {0,0,0}, {0,0,0}, {0,0,0},
-            {0,0,0}, {0,0,0}, {0,0,0},
-            {0,0,0}, {0,0,0}, {0,0,0},
-            {0,0,0}, {0,0,0}, {0,0,0},
-            {0,0,0}, {0,0,0}, {0,0,0}};
+public:
+    Painter(int width, int height)
+    {
+        width = width;
+        height = height;
+        rows = width * height;
+        rgbMatrix = new uint8_t* [rows];
 
-    rbgMatrix[0][1] = 255;
-    rbgMatrix[1][1] = 255;
-    rbgMatrix[2][1] = 255;
-    rbgMatrix[3][1] = 255;
-    rbgMatrix[4][1] = 255;
-    rbgMatrix[5][1] = 255;
-    rbgMatrix[8][1] = 255;
-    rbgMatrix[9][1] = 255;
-    rbgMatrix[14][1] = 255;
-    rbgMatrix[15][1] = 255;
-    rbgMatrix[18][1] = 255;
-    rbgMatrix[19][1] = 255;
-    rbgMatrix[22][1] = 255;
-    rbgMatrix[23][1] = 255;
-    rbgMatrix[24][1] = 255;
-    rbgMatrix[29][1] = 255;
-    rbgMatrix[30][1] = 255;
-    rbgMatrix[32][1] = 255;
-    rbgMatrix[33][1] = 255;
-    rbgMatrix[35][1] = 255;
+        for (int i = 0; i < rows; ++i) {
+            rgbMatrix[i] = new uint8_t[3];
+        }
+    }
 
-    BitmapWriter bw{};
-    bw.write24BitBMP((const char *)outputFileName, 6, 6, (uint8_t*) (rbgMatrix));
+    void Paint(string color, int position)
+    {
+        for (int i = 0; i < 3; i++) {
+            if (color == "black") {
+                rgbMatrix[position][i] = black[i];
+            }
+
+            if (color == "white")
+            {
+                rgbMatrix[position][i] = white[i];
+            }
+
+            if (color == "red")
+            {
+                rgbMatrix[position][i] = red[i];
+            }
+
+            if (color == "green")
+            {
+                rgbMatrix[position][i] = green[i];
+            }
+
+            if (color == "blue")
+            {
+                rgbMatrix[position][i] = blue[i];
+            }
+
+            if (color == "orange")
+            {
+                rgbMatrix[position][i] = orange[i];
+            }
+
+            if (color == "yellow")
+            {
+                rgbMatrix[position][i] = yellow[i];
+            }
+        }
+    }
+
+    void GenerateImage(string* outputFileName)
+    {
+        BitmapWriter bw{};
+        uint8_t rgbData[rows][3];
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < 3; col++) {
+                rgbData[row][col] = rgbMatrix[row][col];
+            }
+        }
+
+        bw.write24BitBMP((const char *) outputFileName, 2,2, (uint8_t*)(rgbData));
+    }
+};
+
+
+int main()
+{
+    Painter p(2,2);
+
+    p.Paint("orange", 0);
+    p.Paint("green", 1);
+    p.Paint("blue", 2);
+    p.Paint("yellow", 3);
+
+    auto* outputFileName = (string*) "test.bmp";
+
+    p.GenerateImage(outputFileName);
 
     return 0;
-*/
+}

@@ -22,7 +22,7 @@ set(PROJECT_SOURCES
         canvas.h
         canvas.cpp
         canvas.ui
-        BitmapWriter.cpp
+        #BitmapWriter.cpp
         )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
