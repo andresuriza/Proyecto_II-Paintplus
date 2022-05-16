@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-
+//#include "BitmapWriter.cpp"
 #include <QApplication>
 
 int main(int argc, char *argv[])
