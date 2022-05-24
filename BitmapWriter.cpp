@@ -83,14 +83,16 @@ public:
         fclose(outputFile);
     }
 
-    static void writeBMPHeader(FILE *outputFile, BitmapFileHeader *fileHeader) {
+    static void writeBMPHeader(FILE *outputFile, BitmapFileHeader *fileHeader)
+    {
         fwrite(&fileHeader->fileHeaderType, sizeof(fileHeader->fileHeaderType), 1, outputFile);
         fwrite(&fileHeader->fileHeaderSize, sizeof(fileHeader->fileHeaderSize), 1, outputFile);
         fwrite(&fileHeader->fileHeaderReserved, sizeof(fileHeader->fileHeaderReserved), 1, outputFile);
         fwrite(&fileHeader->fileHeaderOffBits, sizeof(fileHeader->fileHeaderOffBits), 1, outputFile);
     }
 
-    static void writeBMPInfoHeader(FILE *outputFile, BitmapInfoHeader *infoHeader) {
+    static void writeBMPInfoHeader(FILE *outputFile, BitmapInfoHeader *infoHeader)
+    {
         fwrite(&infoHeader->infoHeaderSize, sizeof(infoHeader->infoHeaderSize), 1,
                outputFile);
         fwrite(&infoHeader->infoHeaderWidth, sizeof(infoHeader->infoHeaderWidth), 1,
@@ -122,13 +124,22 @@ private:
     int width;
     int height;
     int rows;
-    uint8_t black[3] = {0, 0, 0};
-    uint8_t white[3] = {255, 255, 255};
+
     uint8_t red[3] = {255, 0, 0};
-    uint8_t green[3] = {0, 255, 0};
-    uint8_t blue[3] = {0, 0, 255};
-    uint8_t orange[3] = {255, 165, 0};
-    uint8_t yellow[3] = {255, 255, 0};
+    uint8_t orange[3] = {255, 121, 11};
+    uint8_t yellow[3] = {255, 239, 20};
+    uint8_t lime[3] = {0, 255, 0};
+    uint8_t green[3] = {2, 149, 2};
+    uint8_t cyan[3] = {0, 255, 255};
+    uint8_t scarlet[3] = {184, 0, 0};
+    uint8_t brown[3] = {170, 85, 0};
+    uint8_t gold[3] = {230, 199, 87};
+    uint8_t pink[3] = {233, 66, 255};
+    uint8_t black[3] = {0, 0, 0};
+    uint8_t gray[3] = {81, 81, 81};
+    uint8_t lightGray[3] = {159, 159, 159};
+    uint8_t white[3] = {255, 255, 255};
+
     uint8_t** rgbMatrix;
 
 public:
@@ -138,7 +149,6 @@ public:
         height = height;
         rows = width * height;
         rgbMatrix = new uint8_t* [rows];
-
         for (int i = 0; i < rows; ++i) {
             rgbMatrix[i] = new uint8_t[3];
         }
@@ -146,6 +156,30 @@ public:
 
     void Paint(string color, int position)
     {
+        /*
+        int position;
+
+        if (button == "pushButton")
+        {
+            position = 0;
+        }
+
+        else if (button == "pushButton_2")
+        {
+            position = 1;
+        }
+
+        else if (button == "pushButton_3")
+        {
+            position = 2;
+        }
+
+        else if (button == "pushButton_4")
+        {
+            position = 3;
+        }
+         */
+
         for (int i = 0; i < 3; i++) {
             if (color == "black") {
                 rgbMatrix[position][i] = black[i];
@@ -166,9 +200,36 @@ public:
                 rgbMatrix[position][i] = green[i];
             }
 
-            if (color == "blue")
-            {
-                rgbMatrix[position][i] = blue[i];
+            if (color == "lime") {
+                rgbMatrix[position][i] = lime[i];
+            }
+
+            if (color == "cyan") {
+                rgbMatrix[position][i] = cyan[i];
+            }
+
+            if (color == "scarlet") {
+                rgbMatrix[position][i] = scarlet[i];
+            }
+
+            if (color == "brown") {
+                rgbMatrix[position][i] = brown[i];
+            }
+
+            if (color == "gold") {
+                rgbMatrix[position][i] = gold[i];
+            }
+
+            if (color == "pink") {
+                rgbMatrix[position][i] = pink[i];
+            }
+
+            if (color == "gray") {
+                rgbMatrix[position][i] = gray[i];
+            }
+
+            if (color == "lightGray") {
+                rgbMatrix[position][i] = lightGray[i];
             }
 
             if (color == "orange")
@@ -198,9 +259,7 @@ public:
     }
 };
 
-
-int main()
-{
+/*
     Painter p(2,2);
 
     p.Paint("orange", 0);
@@ -213,4 +272,4 @@ int main()
     p.GenerateImage(outputFileName);
 
     return 0;
-}
+*/

@@ -4,12 +4,18 @@
 #include <QMainWindow>
 #include <iostream>
 #include <QPushButton>
+#include <QGridLayout>
+#include "BitmapWriter.cpp"
+#include <QThread>
 
 using namespace std;
 
 namespace Ui {
 class Canvas;
 }
+
+class MyThread : public QThread
+{};
 
 class Canvas : public QMainWindow
 {
@@ -34,15 +40,25 @@ private slots:
     void on_grayButton_clicked();
     void on_lightGrayButton_clicked();
     void on_whiteButton_clicked();
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-    void on_pushButton_3_clicked();
-    void on_pushButton_4_clicked();
-    void paintPixel(QPushButton* button);
+    void saveImage();
+    void on_actionSave_triggered();
+    void test();
+    void start();
+    void PixelCreator();
+    void run();
 
 private:
     Ui::Canvas *ui;
     string currentColor = "black";
+    Painter art;
+    QPixmap pixmap;
+    Qt::GlobalColor color;
+    bool pressed;
+
+protected:
+    MyThread pixelThread;
 };
+
+
 
 #endif // CANVAS_H
