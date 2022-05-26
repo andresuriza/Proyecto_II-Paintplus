@@ -7,7 +7,6 @@
 #include <QWidget>
 #include "BitmapWriter.cpp"
 
-//! [0]
 class ScribbleArea : public QWidget
 {
 Q_OBJECT
@@ -16,7 +15,6 @@ public:
     ScribbleArea(QWidget *parent = nullptr);
 
     bool openImage(const QString &fileName);
-    //bool saveImage(const QString &fileName, const char *fileFormat);
     void setPenColor(const QColor &newColor);
     void setPenWidth(int newWidth);
 
@@ -25,8 +23,9 @@ public:
     int penWidth() const { return myPenWidth; }
     void setSize(int width, int height);
 
+    void saveBMP(string* name);
+
 public slots:
-    //void clearImage();
     void print();
 
 protected:
@@ -46,9 +45,10 @@ private:
     QColor myPenColor = Qt::black;
     QImage image;
     QPoint lastPoint;
-
     Painter* p;
+
+    int widthCanvas;
+    int heightCanvas;
 };
-//! [0]
 
 #endif

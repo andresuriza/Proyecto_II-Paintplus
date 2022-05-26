@@ -396,10 +396,10 @@ border: none;</string>
    <widget class="ScribbleArea" name="canvasWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>240</y>
-      <width>721</width>
-      <height>421</height>
+      <x>40</x>
+      <y>100</y>
+      <width>1481</width>
+      <height>671</height>
      </rect>
     </property>
    </widget>

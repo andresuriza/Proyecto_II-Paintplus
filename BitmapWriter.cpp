@@ -140,90 +140,96 @@ private:
     uint8_t lightGray[3] = {159, 159, 159};
     uint8_t white[3] = {255, 255, 255};
 
-    //uint8_t** rgbMatrix;
-    uint8_t*** rgbMatrix;
+    uint8_t** rgbMatrix;
 
 public:
     Painter(int width, int height)
     {
-        width = width;
-        height = height;
-        rows = width * height;
-        rgbMatrix = new uint8_t** [width];
-        for (int i = 0; i < width; i++) {
-            rgbMatrix[i] = new uint8_t* [height];
+        this->width = width;
+        this->height = height;
+        this->rows = width * height;
+        rgbMatrix = new uint8_t* [rows];
+
+        for (int i = 0; i < rows; i++)
+        {
+                rgbMatrix[i] = new uint8_t[3];
         }
 
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                rgbMatrix[i][j] = new uint8_t[3];
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < 3; col++)
+            {
+                rgbMatrix[row][col] = white[col];
             }
         }
 
     }
 
-    void Paint(string color, int width, int height)
+    void Paint(string color, int posX, int posY)
     {
+        int position = (posX * width) + (posY);
+        //cout << position << endl;
+
         for (int i = 0; i < 3; i++) {
             if (color == "black") {
-                rgbMatrix[width][height][i] = black[i];
+                rgbMatrix[position][i] = black[i];
             }
 
             if (color == "white")
             {
-                rgbMatrix[width][height][i] = white[i];
+                rgbMatrix[position][i] = white[i];
             }
 
             if (color == "red")
             {
-                rgbMatrix[width][height][i] = red[i];
+                rgbMatrix[position][i] = red[i];
             }
 
             if (color == "green")
             {
-                rgbMatrix[width][height][i] = green[i];
+                rgbMatrix[position][i] = green[i];
             }
 
             if (color == "lime") {
-                rgbMatrix[width][height][i] = lime[i];
+                rgbMatrix[position][i] = lime[i];
             }
 
             if (color == "cyan") {
-                rgbMatrix[width][height][i] = cyan[i];
+                rgbMatrix[position][i] = cyan[i];
             }
 
             if (color == "scarlet") {
-                rgbMatrix[width][height][i] = scarlet[i];
+                rgbMatrix[position][i] = scarlet[i];
             }
 
             if (color == "brown") {
-                rgbMatrix[width][height][i] = brown[i];
+                rgbMatrix[position][i] = brown[i];
             }
 
             if (color == "gold") {
-                rgbMatrix[width][height][i] = gold[i];
+                rgbMatrix[position][i] = gold[i];
             }
 
             if (color == "pink") {
-                rgbMatrix[width][height][i] = pink[i];
+                rgbMatrix[position][i] = pink[i];
             }
 
             if (color == "gray") {
-                rgbMatrix[width][height][i] = gray[i];
+                rgbMatrix[position][i] = gray[i];
             }
 
             if (color == "lightGray") {
-                rgbMatrix[width][height][i] = lightGray[i];
+                rgbMatrix[position][i] = lightGray[i];
             }
 
             if (color == "orange")
             {
-                rgbMatrix[width][height][i] = orange[i];
+                rgbMatrix[position][i] = orange[i];
             }
 
             if (color == "yellow")
             {
-                rgbMatrix[width][height][i] = yellow[i];
+                rgbMatrix[position][i] = yellow[i];
             }
         }
     }
@@ -233,28 +239,38 @@ public:
         BitmapWriter bw{};
         uint8_t rgbData[rows][3];
 
-        for (int i = 0; i < width; ++i)
-        {
             for (int row = 0; row < rows; row++)
             {
                 for (int col = 0; col < 3; col++)
                 {
-                    rgbData[row][col] = rgbMatrix[width][row][col];
+                    rgbData[row][col] = rgbMatrix[row][col];
                 }
             }
-        }
 
-        bw.write24BitBMP((const char *) outputFileName, 2,2, (uint8_t*)(rgbData));
+        bw.write24BitBMP((const char *) outputFileName, width, height, (uint8_t*)(rgbData));
     }
 };
 
+/*
 int main() {
-    Painter p(2, 2);
+    Painter p(4, 4);
 
     p.Paint("black", 0,0);
     p.Paint("white", 0,1);
-    p.Paint("white", 1,0);
+    p.Paint("white", 0,2);
+    p.Paint("black", 0,3);
+    p.Paint("black", 1,0);
     p.Paint("black", 1,1);
+    p.Paint("black", 1,2);
+    p.Paint("black", 1,3);
+    p.Paint("black", 2,0);
+    p.Paint("black", 2,1);
+    p.Paint("black", 2,2);
+    p.Paint("black", 2,3);
+    p.Paint("black", 3,0);
+    p.Paint("black", 3,1);
+    p.Paint("black", 3,2);
+    p.Paint("black", 3,3);
 
     auto *outputFileName = (string *) "newtest.bmp";
 
@@ -262,3 +278,4 @@ int main() {
 
     return 0;
 }
+ */

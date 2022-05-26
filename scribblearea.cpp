@@ -12,11 +12,13 @@ ScribbleArea::ScribbleArea(QWidget *parent) : QWidget(parent)
 
 void ScribbleArea::setSize(int width, int height)
 {
-    p = new Painter(width, height);
+    this->widthCanvas = width;
+    this->heightCanvas = height;
+
+   p = new Painter(width, height);
 }
 
 bool ScribbleArea::openImage(const QString &fileName)
-//! [1] //! [2]
 {
     QImage loadedImage;
     if (!loadedImage.load(fileName))
@@ -42,21 +44,31 @@ void ScribbleArea::setPenWidth(int newWidth)
 
 void ScribbleArea::mousePressEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton) {
+    if (event->button() == Qt::LeftButton)
+    {
         lastPoint = event->pos();
-        //p->Paint("black", )
+        scribbling = true;
 
-        // if (event->pos().x() < width)
-
+        if (event->pos().x() <= widthCanvas)
+        {
+            if (event->pos().y() <= heightCanvas) {
+                p->Paint("black", event->pos().x(), event->pos().y());
+            }
+        }
     }
 }
 
 void ScribbleArea::mouseMoveEvent(QMouseEvent *event)
 {
-    if ((event->buttons() & Qt::LeftButton) && scribbling)
+    if ((event->buttons() & Qt::LeftButton) && scribbling) {
         drawLineTo(event->pos());
-        cout << event->pos().x() << endl;
-        cout << event->pos().y() << endl;
+
+        if (event->pos().x() <= widthCanvas) {
+            if (event->pos().y() <= heightCanvas) {
+                p->Paint("black", event->pos().x(), event->pos().y());
+            }
+        }
+    }
 }
 
 void ScribbleArea::mouseReleaseEvent(QMouseEvent *event)
@@ -64,6 +76,12 @@ void ScribbleArea::mouseReleaseEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton && scribbling) {
         drawLineTo(event->pos());
         scribbling = false;
+
+        if (event->pos().x() <= widthCanvas) {
+            if (event->pos().y() <= heightCanvas) {
+                p->Paint("black", event->pos().x(), event->pos().y());
+            }
+        }
     }
 }
 
@@ -109,6 +127,11 @@ void ScribbleArea::resizeImage(QImage *image, const QSize &newSize)
     QPainter painter(&newImage);
     painter.drawImage(QPoint(0, 0), *image);
     *image = newImage;
+}
+
+void ScribbleArea::saveBMP(string *name)
+{
+    p->GenerateImage(name);
 }
 
 void ScribbleArea::print()

@@ -48,7 +48,7 @@ private slots:
 private:
     Ui::Canvas *ui;
     string currentColor = "black";
-    Painter art;
+    //Painter art;
     QPixmap pixmap;
     Qt::GlobalColor color;
     bool pressed;

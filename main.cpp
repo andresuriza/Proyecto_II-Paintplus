@@ -6,18 +6,6 @@
 
 using namespace std;
 
-void GridTranslator(int width, int height)
-{
-    int matrix[2][2] = {{0,1},{2,3}};
-
-    if (height > 2)
-    {
-
-    }
-
-}
-
-
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);

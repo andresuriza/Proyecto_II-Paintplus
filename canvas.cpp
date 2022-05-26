@@ -8,13 +8,14 @@
 #include <QThread>
 
 Canvas::Canvas(QWidget *parent, int width, int height) : QMainWindow(parent),
-ui(new Ui::Canvas), art(width, height), scribbleArea(new ScribbleArea(this))
-
+ui(new Ui::Canvas), scribbleArea(new ScribbleArea(this))
+//, art(width, height)
 {
     ui->setupUi(this);
-    ui->canvasWidget->setFixedSize(100,100);
-    ui->canvasWidget->setSans(100, 100);
-
+    cout << width << endl;
+    cout << height << endl;
+    ui->canvasWidget->setFixedSize(height,width);
+    ui->canvasWidget->setSize(width,height);
     //setCentralWidget(scribbleArea);
     //scribbleArea->resize(100,100);
     //PixelCreator();
@@ -37,7 +38,6 @@ void Canvas::PixelCreator()
 
 Canvas::~Canvas()
 {
-    //threadPixels.detach();
     delete ui;
 }
 
@@ -224,7 +224,8 @@ void Canvas::paintPixel(QPushButton* button)
 void Canvas::saveImage()
 {
     auto* outputFileName = (string*) "ui_made.bmp";
-    art.GenerateImage(outputFileName);
+    ui->canvasWidget->saveBMP(outputFileName);
+    //art.GenerateImage(outputFileName);
 }
 
 void Canvas::on_actionSave_triggered()
