@@ -393,13 +393,13 @@ border: none;</string>
      <string/>
     </property>
    </widget>
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="ScribbleArea" name="canvasWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>140</y>
-      <width>1431</width>
-      <height>591</height>
+      <x>450</x>
+      <y>240</y>
+      <width>721</width>
+      <height>421</height>
      </rect>
     </property>
    </widget>
@@ -469,6 +469,14 @@ border: none;</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ScribbleArea</class>
+   <extends>QWidget</extends>
+   <header>scribblearea.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

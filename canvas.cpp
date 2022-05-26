@@ -4,51 +4,33 @@
 #include <QMouseEvent>
 #include <QPicture>
 #include <QGridLayout>
+#include "scribblearea.h"
 #include <QThread>
 
-Canvas::Canvas(QWidget *parent, int width, int height) : QMainWindow(parent), ui(new Ui::Canvas), art(width, height)
+Canvas::Canvas(QWidget *parent, int width, int height) : QMainWindow(parent),
+ui(new Ui::Canvas), art(width, height), scribbleArea(new ScribbleArea(this))
+
 {
     ui->setupUi(this);
-    //start();
+    ui->canvasWidget->setFixedSize(100,100);
+    ui->canvasWidget->setSans(100, 100);
+
+    //setCentralWidget(scribbleArea);
+    //scribbleArea->resize(100,100);
     //PixelCreator();
 }
 
-void Canvas::test()
-{
-    cout << "hello";
-}
-
-void Canvas::start()
-{
-    pixelThread.start();
-}
-
-void Canvas::run()
-{
-    cout << "bruh";
-}
+// MAX CANVAS SIZE 1481x671
 
 void Canvas::PixelCreator()
 {
     QGridLayout* grid = new QGridLayout();
-    ui->widget->setLayout(grid);
-    ui->widget->setFixedSize(500,500);
     grid->setVerticalSpacing(0);
     grid->setVerticalSpacing(0);
     int columns;
 
         for (int i = 0; i < 500; i++) {
             for (int j = 0; j < 500; j++) {
-                QPushButton *button = new QPushButton(ui->widget);
-                grid->addWidget(button, j, i);
-
-                button->setStyleSheet("background-color:rgb(255,255,255); border: none;");
-                button->setFixedSize(1, 1);
-                // set size for each button
-
-                connect(button, &QPushButton::clicked, [=]() {
-                    cout << "test";
-                });
             }
         }
 }

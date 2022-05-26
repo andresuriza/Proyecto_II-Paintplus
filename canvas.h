@@ -5,10 +5,11 @@
 #include <iostream>
 #include <QPushButton>
 #include <QGridLayout>
-#include "BitmapWriter.cpp"
 #include <QThread>
 
 using namespace std;
+
+class ScribbleArea;
 
 namespace Ui {
 class Canvas;
@@ -42,10 +43,7 @@ private slots:
     void on_whiteButton_clicked();
     void saveImage();
     void on_actionSave_triggered();
-    void test();
-    void start();
     void PixelCreator();
-    void run();
 
 private:
     Ui::Canvas *ui;
@@ -54,6 +52,7 @@ private:
     QPixmap pixmap;
     Qt::GlobalColor color;
     bool pressed;
+    ScribbleArea *scribbleArea;
 
 protected:
     MyThread pixelThread;
