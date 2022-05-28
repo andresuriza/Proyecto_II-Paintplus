@@ -21,7 +21,6 @@ public:
     void setPenColor(const QColor &newColor, string currentColor);
     void setPenWidth(int newWidth);
 
-    bool isModified() const { return modified; }
     QColor penColor() const { return myPenColor; }
     int penWidth() const { return myPenWidth; }
     void SetDimensions(int width, int height);
@@ -29,6 +28,8 @@ public:
     void SaveBMP(string* name);
 
     bool colorPicker = false;
+    bool paintFill = false;
+    bool pen = false;
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -41,7 +42,6 @@ private:
     void drawLineTo(const QPoint &endPoint);
     void resizeImage(QImage *image, const QSize &newSize);
 
-    bool modified = false;
     bool scribbling = false;
     int myPenWidth = 1;
     QColor myPenColor;

@@ -31,9 +31,6 @@ void PaintingArea::SetDimensions(int width, int height)
     this->widthCanvas = width;
     this->heightCanvas = height;
 
-    cout << width << endl;
-    cout << height << endl;
-
     p = new Painter(width, height);
 }
 
@@ -53,7 +50,6 @@ bool PaintingArea::OpenImage(const QString &fileName)
     QSize newSize = loadedImage.size().expandedTo(size());
     resizeImage(&loadedImage, newSize);
     image = loadedImage;
-    modified = false;
     update();
     return true;
 }
@@ -93,7 +89,7 @@ void PaintingArea::mousePressEvent(QMouseEvent *event)
         {
             lastPoint = event->pos();
 
-            if (colorPicker == true) {
+            if (colorPicker) {
                 int x = lastPoint.x();
                 int y = lastPoint.y();
                 int position = (this->widthCanvas * x) + y;
@@ -108,13 +104,27 @@ void PaintingArea::mousePressEvent(QMouseEvent *event)
 
                 this->colorPicker = false;
             }
+            if (paintFill) {
+                int x = lastPoint.x();
+                int y = lastPoint.y();
+
+                QPoint finishPoint;
+                finishPoint.setX(x + 100);
+                finishPoint.setY(y);
+                drawLineTo(finishPoint);
+
+                this->paintFill = false;
+            }
+            if (pen) {
+                cout << "pen" << endl;
+            }
             else {
                 scribbling = true;
 
                 if (event->pos().x() <= widthCanvas)
                 {
                     if (event->pos().y() <= heightCanvas) {
-                        p->Paint(bmpColor, event->pos().x(), event->pos().y());
+                        p->Paint(bmpColor, event->pos().y(), event->pos().x());
                     }
                 }
             }
@@ -143,6 +153,11 @@ void PaintingArea::mouseMoveEvent(QMouseEvent *event) {
  * @param event
  */
 void PaintingArea::mouseReleaseEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton && pen) {
+        drawLineTo(event->pos());
+        p->Paint(bmpColor, event->pos().y(), event->pos().x());
+        this->pen = false;
+    }
     if (event->button() == Qt::LeftButton && scribbling) {
         if (event->pos().x() <= widthCanvas && event->pos().x() >= 0 && event->pos().y() < heightCanvas && event->pos().y() >= 0) {
             drawLineTo(event->pos());
@@ -194,7 +209,36 @@ void PaintingArea::drawLineTo(const QPoint &endPoint)
     painter.setPen(QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::SquareCap,
                         Qt::BevelJoin));
     painter.drawLine(lastPoint, endPoint);
-    modified = true;
+
+    int x1 = lastPoint.x();
+    int y1 = lastPoint.y();
+    int x2 = endPoint.x();
+    int y2 = endPoint.y();
+
+    while (x1 != x2 && y1 != y2) {
+        cout << x1 << endl;
+        cout << y1 << endl;
+        cout << x2 << endl;
+        cout << y2 << endl;
+        cout << "" << endl;
+
+        if (x1 > x2) {
+            p->Paint(bmpColor, y1, x1);
+            x1 -= 1;
+        }
+        if (y1 > y2) {
+          p->Paint(bmpColor, y1, x1);
+          y1 -= 1;
+        }
+        if (y1 < y2) {
+            p->Paint(bmpColor, y1, x1);
+            y1 += 1;
+        }
+        if (x1 < x2) {
+            p->Paint(bmpColor, y1, x1);
+            x1 += 1;
+        }
+    }
 
     int rad = (myPenWidth / 2) + 2;
     update(QRect(lastPoint, endPoint).normalized()

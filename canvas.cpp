@@ -181,3 +181,15 @@ void Canvas::on_actionColor_Picked_triggered()
     ui->canvasWidget->colorPicker = true;
 }
 
+
+void Canvas::on_actionPaint_Fill_triggered()
+{
+    ui->canvasWidget->paintFill = true;
+}
+
+
+void Canvas::on_actionPen_triggered()
+{
+    ui->canvasWidget->pen = true;
+}
+

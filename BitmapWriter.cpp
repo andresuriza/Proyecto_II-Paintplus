@@ -284,6 +284,58 @@ public:
         }
     }
 
+class queueNode {
+private:
+    int x;
+    int y;
+    int position;
+    queueNode* nextNode;
+
+public:
+    void QueueNode (int width, int x, int y) {
+        this->position = (width * x) + y;
+    }
+
+    int getX() {
+        return x;
+    }
+
+    int getY() {
+        return y;
+    }
+
+    queueNode* getNextNode () {
+        return nextNode;
+    }
+
+    void setNextNode (queueNode* newNextNode) {
+        this->nextNode = newNextNode;
+    }
+};
+
+class bfsQueue {
+private:
+    queueNode* header;
+    queueNode* lastNode;
+
+    void setHeader (queueNode* node) {
+        this->header = node;
+        this->lastNode = node;
+    }
+
+    void push (queueNode* node) {
+        this->lastNode->setNextNode(node);
+        this->lastNode = node;
+    }
+
+    queueNode* pop () {
+        queueNode* temp = header;
+        this->header = temp->getNextNode();
+
+        return temp;
+    }
+};
+
 
     /**
      * Creates a matrix based on the RGB matrix data generated before in order to send it to the BMP writer class

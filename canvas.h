@@ -5,7 +5,6 @@
 #include <iostream>
 #include <QPushButton>
 #include <QGridLayout>
-#include <QThread>
 #include "PaintingArea.h"
 #include <QColor>
 
@@ -16,9 +15,6 @@ class Canvas;
 namespace Ui {
 class Canvas;
 }
-
-class MyThread : public QThread
-{};
 
 /**
  * Class that creates a UI that includes a canvas and other tools for drawing
@@ -51,15 +47,17 @@ private slots:
 
     void on_actionColor_Picked_triggered();
 
+    void on_actionPaint_Fill_triggered();
+
+    void on_actionPen_triggered();
+
 private:
     Ui::Canvas *ui;
     string currentColor = "black";
-    QPixmap pixmap;
     PaintingArea *paintingArea;
     QColor pickedColor;
 
 protected:
-    MyThread pixelThread;
 };
 
 
