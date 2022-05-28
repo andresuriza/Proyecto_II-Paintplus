@@ -7,6 +7,7 @@
 #include <QGridLayout>
 #include <QThread>
 #include "PaintingArea.h"
+#include <QColor>
 
 using namespace std;
 
@@ -48,11 +49,14 @@ private slots:
     void saveImage();
     void on_actionSave_triggered();
 
+    void on_actionColor_Picked_triggered();
+
 private:
     Ui::Canvas *ui;
     string currentColor = "black";
     QPixmap pixmap;
     PaintingArea *paintingArea;
+    QColor pickedColor;
 
 protected:
     MyThread pixelThread;

@@ -175,9 +175,11 @@ private:
     uint8_t lightGray[3] = {159, 159, 159};
     uint8_t white[3] = {255, 255, 255};
 
-    uint8_t** rgbMatrix;
+    //uint8_t** rgbMatrix;
 
 public:
+    uint8_t** rgbMatrix;
+
     /**
      * Constructor function
      *

@@ -37,111 +37,125 @@ Canvas::~Canvas()
  */
 void Canvas::on_redButton_clicked()
 {
-    currentColor = "red";
+    pickedColor.setRgb(255, 0, 0, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "red");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when orangeButton is clicked
  */
 void Canvas::on_orangeButton_clicked()
 {
-    currentColor = "orange";
+    pickedColor.setRgb(255, 121, 11, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "orange");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when yellowButton is clicked
  */
 void Canvas::on_yellowButton_clicked()
 {
-    currentColor = "yellow";
+    pickedColor.setRgb(255, 239, 20, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "yellow");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when limeButton is clicked
  */
 void Canvas::on_limeButton_clicked()
 {
-    currentColor = "lime";
+    pickedColor.setRgb(0, 250, 0, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "lime");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when greenButton is clicked
  */
 void Canvas::on_greenButton_clicked()
 {
-    currentColor = "green";
+    pickedColor.setRgb(2, 149, 2, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "green");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when cyanButton is clicked
  */
 void Canvas::on_cyanButton_clicked()
 {
-    currentColor = "cyan";
+    pickedColor.setRgb(0, 255, 255, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "cyan");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when scarletButton is clicked
  */
 void Canvas::on_scarletButton_clicked()
 {
-    currentColor = "scarlet";
+    pickedColor.setRgb(184, 0, 0, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "scarlet");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when brownButton is clicked
  */
 void Canvas::on_brownButton_clicked()
 {
-    currentColor = "brown";
+    pickedColor.setRgb(170, 85, 0, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "brown");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when goldButton is clicked
  */
 void Canvas::on_goldButton_clicked()
 {
-    currentColor = "gold";
+    pickedColor.setRgb(230, 199, 87, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "gold");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when pinkButton is clicked
  */
 void Canvas::on_pinkButton_clicked()
 {
-    currentColor = "pink";
+    pickedColor.setRgb(233, 66, 255, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "pink");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when blackButton is clicked
  */
 void Canvas::on_blackButton_clicked()
 {
-    currentColor = "black";
+    pickedColor.setRgb(0, 0, 0, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "black");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when grayButton is clicked
  */
 void Canvas::on_grayButton_clicked()
 {
-    currentColor = "gray";
+    pickedColor.setRgb(81, 81, 81, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "gray");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when lightGrayButton is clicked
  */
 void Canvas::on_lightGrayButton_clicked()
 {
-    currentColor = "lightGray";
+    pickedColor.setRgb(159, 159, 159, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "lightgray");
 }
 
 /**
- * Action when redButton is clicked
+ * Action when whiteButton is clicked
  */
 void Canvas::on_whiteButton_clicked()
 {
-    currentColor = "white";
+    pickedColor.setRgb(255, 255, 255, 255);
+    ui->canvasWidget->setPenColor(pickedColor, "white");
 }
 
 /**
@@ -161,3 +175,9 @@ void Canvas::on_actionSave_triggered()
 {
     saveImage();
 }
+
+void Canvas::on_actionColor_Picked_triggered()
+{
+    ui->canvasWidget->colorPicker = true;
+}
+

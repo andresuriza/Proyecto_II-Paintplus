@@ -410,7 +410,7 @@ border: none;</string>
      <x>0</x>
      <y>0</y>
      <width>1579</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_flip">
@@ -434,9 +434,16 @@ border: none;</string>
     <addaction name="actionSave"/>
     <addaction name="actionLoad"/>
    </widget>
+   <widget class="QMenu" name="menuHerramientas">
+    <property name="title">
+     <string>Herramientas</string>
+    </property>
+    <addaction name="actionColor_Picked"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menu_flip"/>
    <addaction name="menuRotate"/>
+   <addaction name="menuHerramientas"/>
   </widget>
   <action name="actionHorizontally">
    <property name="text">
@@ -466,6 +473,11 @@ border: none;</string>
   <action name="actionLoad">
    <property name="text">
     <string>Load</string>
+   </property>
+  </action>
+  <action name="actionColor_Picked">
+   <property name="text">
+    <string>Color Picked</string>
    </property>
   </action>
  </widget>

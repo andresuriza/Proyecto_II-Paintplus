@@ -14,6 +14,9 @@ using namespace std;
 PaintingArea::PaintingArea(QWidget *parent) : QWidget(parent)
 {
     setAttribute(Qt::WA_StaticContents);
+
+    myPenColor.setRgb(0, 0, 0, 255);
+    bmpColor = "black";
 }
 
 /**
@@ -61,9 +64,10 @@ bool PaintingArea::OpenImage(const QString &fileName)
  *
  * @param newColor
  */
-void PaintingArea::SetPenColor(const QColor &newColor)
+void PaintingArea::setPenColor(const QColor &newColor, string currentColor)
 {
     myPenColor = newColor;
+    bmpColor = currentColor;
 }
 
 /**
@@ -72,7 +76,7 @@ void PaintingArea::SetPenColor(const QColor &newColor)
  *
  * @param newWidth
  */
-void PaintingArea::SetPenWidth(int newWidth)
+void PaintingArea::setPenWidth(int newWidth)
 {
     myPenWidth = newWidth;
 }
@@ -86,13 +90,35 @@ void PaintingArea::SetPenWidth(int newWidth)
 void PaintingArea::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
-    {
-        lastPoint = event->pos();
-        scribbling = true;
+        {
+            lastPoint = event->pos();
 
-        //cout << event->pos().x() << endl;
-       // cout << event->pos().y() << endl;
-    }
+            if (colorPicker == true) {
+                int x = lastPoint.x();
+                int y = lastPoint.y();
+                int position = (this->widthCanvas * x) + y;
+
+                int redCode = p->rgbMatrix[position][0];
+                int greenCode = p->rgbMatrix[position][1];
+                int blueCode = p->rgbMatrix[position][2];
+
+                cout << redCode << endl;
+                cout << greenCode << endl;
+                cout << blueCode << endl;
+
+                this->colorPicker = false;
+            }
+            else {
+                scribbling = true;
+
+                if (event->pos().x() <= widthCanvas)
+                {
+                    if (event->pos().y() <= heightCanvas) {
+                        p->Paint(bmpColor, event->pos().x(), event->pos().y());
+                    }
+                }
+            }
+        }
 }
 
 /**
@@ -103,11 +129,9 @@ void PaintingArea::mousePressEvent(QMouseEvent *event)
  */
 void PaintingArea::mouseMoveEvent(QMouseEvent *event) {
     if ((event->buttons() & Qt::LeftButton) && scribbling) {
-        if (event->pos().x() <= 500 && event->pos().x() >= 0 && event->pos().y() <= 500 && event->pos().y() >= 0) {
+        if (event->pos().x() <= widthCanvas && event->pos().x() >= 0 && event->pos().y() < heightCanvas && event->pos().y() >= 0) {
             drawLineTo(event->pos());
-            p->Paint("black", event->pos().y(), event->pos().x());
-           // cout << event->pos().x() << endl;
-           // cout << event->pos().y() << endl;
+            p->Paint(bmpColor, event->pos().y(), event->pos().x());
         }
     }
 }
@@ -120,12 +144,10 @@ void PaintingArea::mouseMoveEvent(QMouseEvent *event) {
  */
 void PaintingArea::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton && scribbling) {
-        if (event->pos().x() <= 500 && event->pos().x() >= 0 && event->pos().y() <= 500 && event->pos().y() >= 0) {
+        if (event->pos().x() <= widthCanvas && event->pos().x() >= 0 && event->pos().y() < heightCanvas && event->pos().y() >= 0) {
             drawLineTo(event->pos());
             scribbling = false;
-            p->Paint("black", event->pos().y(), event->pos().x());
-            //cout << event->pos().x() << endl;
-            // cout << event->pos().y() << endl;
+            p->Paint(bmpColor, event->pos().y(), event->pos().x());
         }
     }
 }

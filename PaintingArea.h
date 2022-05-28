@@ -18,8 +18,8 @@ public:
     explicit PaintingArea(QWidget *parent = nullptr);
 
     bool OpenImage(const QString &fileName);
-    void SetPenColor(const QColor &newColor);
-    void SetPenWidth(int newWidth);
+    void setPenColor(const QColor &newColor, string currentColor);
+    void setPenWidth(int newWidth);
 
     bool isModified() const { return modified; }
     QColor penColor() const { return myPenColor; }
@@ -27,6 +27,8 @@ public:
     void SetDimensions(int width, int height);
 
     void SaveBMP(string* name);
+
+    bool colorPicker = false;
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -42,13 +44,14 @@ private:
     bool modified = false;
     bool scribbling = false;
     int myPenWidth = 1;
-    QColor myPenColor = Qt::black;
+    QColor myPenColor;
     QImage image;
     QPoint lastPoint;
     Painter* p{};
 
     int widthCanvas{};
     int heightCanvas{};
+    string bmpColor;
 };
 
 #endif
