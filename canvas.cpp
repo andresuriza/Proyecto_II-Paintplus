@@ -4,230 +4,159 @@
 #include <QMouseEvent>
 #include <QPicture>
 #include <QGridLayout>
-#include "scribblearea.h"
-#include <QThread>
+#include "PaintingArea.h"
 
+/**
+ *
+ * Constructor function
+ *
+ * @param parent
+ * @param width
+ * @param height
+ */
 Canvas::Canvas(QWidget *parent, int width, int height) : QMainWindow(parent),
-ui(new Ui::Canvas), scribbleArea(new ScribbleArea(this))
-//, art(width, height)
+ui(new Ui::Canvas), paintingArea(new PaintingArea(this))
 {
     ui->setupUi(this);
-    cout << width << endl;
-    cout << height << endl;
-    ui->canvasWidget->setFixedSize(height,width);
-    ui->canvasWidget->setSize(width,height);
-    //setCentralWidget(scribbleArea);
-    //scribbleArea->resize(100,100);
-    //PixelCreator();
+    ui->canvasWidget->setFixedSize(width,height);
+    ui->canvasWidget->SetDimensions(width, height);
 }
 
 // MAX CANVAS SIZE 1481x671
 
-void Canvas::PixelCreator()
-{
-    QGridLayout* grid = new QGridLayout();
-    grid->setVerticalSpacing(0);
-    grid->setVerticalSpacing(0);
-    int columns;
-
-        for (int i = 0; i < 500; i++) {
-            for (int j = 0; j < 500; j++) {
-            }
-        }
-}
-
+/**
+ * Destructor function
+ */
 Canvas::~Canvas()
 {
     delete ui;
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_redButton_clicked()
 {
     currentColor = "red";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_orangeButton_clicked()
 {
     currentColor = "orange";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_yellowButton_clicked()
 {
     currentColor = "yellow";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_limeButton_clicked()
 {
     currentColor = "lime";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_greenButton_clicked()
 {
     currentColor = "green";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_cyanButton_clicked()
 {
     currentColor = "cyan";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_scarletButton_clicked()
 {
     currentColor = "scarlet";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_brownButton_clicked()
 {
     currentColor = "brown";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_goldButton_clicked()
 {
     currentColor = "gold";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_pinkButton_clicked()
 {
     currentColor = "pink";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_blackButton_clicked()
 {
     currentColor = "black";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_grayButton_clicked()
 {
     currentColor = "gray";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_lightGrayButton_clicked()
 {
     currentColor = "lightGray";
 }
 
+/**
+ * Action when redButton is clicked
+ */
 void Canvas::on_whiteButton_clicked()
 {
     currentColor = "white";
 }
 
-/*
-void Canvas::on_pushButton_clicked()
-{
-    paintPixel(ui->pushButton);
-}
-
-void Canvas::on_pushButton_2_clicked()
-{
-    paintPixel(ui->pushButton_2);
-}
-
-void Canvas::on_pushButton_3_clicked()
-{
-    paintPixel(ui->pushButton_3);
-}
-
-void Canvas::on_pushButton_4_clicked()
-{
-    paintPixel(ui->pushButton_4);
-}
-
-void Canvas::paintPixel(QPushButton* button)
-{
-    if (currentColor == "red")
-    {
-        art.Paint("red", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(255, 0, 0); border:none;");
-    }
-
-    if (currentColor == "orange")
-    {
-        art.Paint("orange", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(255, 121, 11); border:none;");
-    }
-
-    if (currentColor == "yellow")
-    {
-        art.Paint("yellow", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(255, 239, 20); border:none;");
-    }
-
-    if (currentColor == "lime")
-    {
-        art.Paint("lime", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(0, 255, 0); border:none;");
-    }
-
-    if (currentColor == "green")
-    {
-        art.Paint("green", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(2, 149, 2); border:none;");
-    }
-
-    if (currentColor == "cyan")
-    {
-        art.Paint("cyan", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(0, 255, 255); border:none;");
-    }
-
-    if (currentColor == "scarlet")
-    {
-        art.Paint("scarlet", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(184, 0, 0); border:none;");
-    }
-
-    if (currentColor == "brown")
-    {
-        art.Paint("brown", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(170, 85, 0); border:none;");
-    }
-
-    if (currentColor == "gold")
-    {
-        art.Paint("gold", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(230, 199, 87); border:none;");
-    }
-
-    if (currentColor == "pink")
-    {
-        art.Paint("pink", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(233, 66, 255); border:none;");
-    }
-
-    if (currentColor == "black")
-    {
-        art.Paint("black", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(0, 0, 0); border:none;");
-    }
-
-    if (currentColor == "gray")
-    {
-        art.Paint("gray", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(81, 81, 81); border:none;");
-    }
-
-    if (currentColor == "lightGray")
-    {
-        art.Paint("lightGray", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(159, 159, 159); border:none;");
-    }
-
-    if (currentColor == "white")
-    {
-        art.Paint("white", button->objectName().toStdString());
-        button->setStyleSheet("background-color:rgb(255, 255, 255); border:none;");
-    }
-}
-
+/**
+ * Calls a function to save the drawn BMP with the specified name
  */
-
 void Canvas::saveImage()
 {
     auto* outputFileName = (string*) "ui_made.bmp";
-    ui->canvasWidget->saveBMP(outputFileName);
+    ui->canvasWidget->SaveBMP(outputFileName);
     //art.GenerateImage(outputFileName);
 }
 
+/**
+ * Action for the save button
+ */
 void Canvas::on_actionSave_triggered()
 {
     saveImage();

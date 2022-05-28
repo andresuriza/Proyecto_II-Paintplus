@@ -23,8 +23,8 @@ set(PROJECT_SOURCES
         canvas.ui
         canvas.cpp
         BitmapWriter.cpp
-        scribblearea.cpp
-        scribblearea.h
+        PaintingArea.cpp
+        PaintingArea.h
         )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

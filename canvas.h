@@ -6,10 +6,11 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QThread>
+#include "PaintingArea.h"
 
 using namespace std;
 
-class ScribbleArea;
+class Canvas;
 
 namespace Ui {
 class Canvas;
@@ -18,13 +19,16 @@ class Canvas;
 class MyThread : public QThread
 {};
 
+/**
+ * Class that creates a UI that includes a canvas and other tools for drawing
+ */
 class Canvas : public QMainWindow
 {
     Q_OBJECT
 
 public:
     explicit Canvas(QWidget *parent, int width, int height);
-    ~Canvas();
+    ~Canvas() override;
 
 private slots:
     void on_redButton_clicked();
@@ -43,16 +47,12 @@ private slots:
     void on_whiteButton_clicked();
     void saveImage();
     void on_actionSave_triggered();
-    void PixelCreator();
 
 private:
     Ui::Canvas *ui;
     string currentColor = "black";
-    //Painter art;
     QPixmap pixmap;
-    Qt::GlobalColor color;
-    bool pressed;
-    ScribbleArea *scribbleArea;
+    PaintingArea *paintingArea;
 
 protected:
     MyThread pixelThread;

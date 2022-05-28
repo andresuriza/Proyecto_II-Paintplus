@@ -1,5 +1,5 @@
-#ifndef SCRIBBLEAREA_H
-#define SCRIBBLEAREA_H
+#ifndef PAINTINGAREA_H
+#define PAINTINGAREA_H
 
 #include <QColor>
 #include <QImage>
@@ -7,26 +7,26 @@
 #include <QWidget>
 #include "BitmapWriter.cpp"
 
-class ScribbleArea : public QWidget
+/**
+ * Class that manages user input to allow drawing
+ */
+class PaintingArea : public QWidget
 {
 Q_OBJECT
 
 public:
-    ScribbleArea(QWidget *parent = nullptr);
+    explicit PaintingArea(QWidget *parent = nullptr);
 
-    bool openImage(const QString &fileName);
-    void setPenColor(const QColor &newColor);
-    void setPenWidth(int newWidth);
+    bool OpenImage(const QString &fileName);
+    void SetPenColor(const QColor &newColor);
+    void SetPenWidth(int newWidth);
 
     bool isModified() const { return modified; }
     QColor penColor() const { return myPenColor; }
     int penWidth() const { return myPenWidth; }
-    void setSize(int width, int height);
+    void SetDimensions(int width, int height);
 
-    void saveBMP(string* name);
-
-public slots:
-    void print();
+    void SaveBMP(string* name);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -45,10 +45,10 @@ private:
     QColor myPenColor = Qt::black;
     QImage image;
     QPoint lastPoint;
-    Painter* p;
+    Painter* p{};
 
-    int widthCanvas;
-    int heightCanvas;
+    int widthCanvas{};
+    int heightCanvas{};
 };
 
 #endif

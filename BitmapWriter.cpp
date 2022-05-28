@@ -2,30 +2,39 @@
 
 using namespace std;
 
+/**
+ * Stores the file header for the bitmap
+ */
 class BitmapFileHeader {
 public:
-    uint16_t fileHeaderType;      // Header field used to identify the BMP. Must be set to 'B','M' (0x42 0x4d).
-    uint32_t fileHeaderSize;      // Size of the complete file (Header + InfoHeader + PixelData) in bytes.
-    uint32_t fileHeaderReserved;  // Reserved. Must be set to zero.
-    uint32_t fileHeaderOffBits;   // Number of bytes until the pixel data starts (counted from the file-start). Always
-                                  // 54
+    uint16_t fileHeaderType;
+    uint32_t fileHeaderSize;
+    uint32_t fileHeaderReserved;
+    uint32_t fileHeaderOffBits;
 };
 
+/**
+ * Stores the info header for the bitmap
+ */
 class BitmapInfoHeader {
 public:
-    uint32_t infoHeaderSize;          // The size of the info header in bytes (40).
-    uint32_t infoHeaderWidth;         // The Bitmap width in pixels.
-    uint32_t infoHeaderHeight;        // The Bitmap height in pixels.
-    uint16_t infoHeaderPlanes;        // The number of color planes. Must be set to one.
-    uint16_t infoHeaderBitCount;      // The number of bits per pixel (color depth).
-    uint32_t infoHeaderCompression;   // The compression method being used (zero equals no compression).
-    uint32_t infoHeaderImageSize;     // The size of the raw bitmap data. Zero is fine.
-    uint32_t infoHeaderXPixelsPerM; // Horizontal resolution of the image. Zero is fine.
-    uint32_t infoHeaderYPixelsPerM; // Vertical   resolution of the image. Zero is fine.
-    uint32_t infoHeaderColorsUsed;       // Number of colors in the color paletter.
-    uint32_t infoHeaderColorsImportant;  // Number of important colors used. Zero equals every color is important.
+    uint32_t infoHeaderSize;
+    uint32_t infoHeaderWidth;
+    uint32_t infoHeaderHeight;
+    uint16_t infoHeaderPlanes;
+    uint16_t infoHeaderBitCount;
+    uint32_t infoHeaderCompression;
+    uint32_t infoHeaderImageSize;
+    uint32_t infoHeaderXPixelsPerM;
+    uint32_t infoHeaderYPixelsPerM;
+    uint32_t infoHeaderColorsUsed;
+    uint32_t infoHeaderColorsImportant;
 };
 
+/**
+ * Class that contains function to write a BMP file based on a matrix with the info and file headers and the color
+ * information
+ */
 class BitmapWriter {
 private:
     uint8_t overhead;
@@ -38,6 +47,15 @@ private:
     uint8_t* pixels;
 
 public:
+    /**
+     *
+     * Writes data into the file and info headers, as well as creating an array for writing to a file
+     *
+     * @param outputFileName
+     * @param width
+     * @param height
+     * @param rgbData
+     */
     void write24BitBMP(const char *outputFileName, uint32_t width, uint32_t height, const uint8_t *rgbData) {
         FILE* outputFile = fopen(outputFileName, "wb");
 
@@ -83,6 +101,13 @@ public:
         fclose(outputFile);
     }
 
+    /**
+     *
+     * Writes the BMP file header data to a file
+     *
+     * @param outputFile
+     * @param fileHeader
+     */
     static void writeBMPHeader(FILE *outputFile, BitmapFileHeader *fileHeader)
     {
         fwrite(&fileHeader->fileHeaderType, sizeof(fileHeader->fileHeaderType), 1, outputFile);
@@ -91,6 +116,13 @@ public:
         fwrite(&fileHeader->fileHeaderOffBits, sizeof(fileHeader->fileHeaderOffBits), 1, outputFile);
     }
 
+    /**
+     *
+     * Writes the BMP info header data to a file
+     *
+     * @param outputFile
+     * @param infoHeader
+     */
     static void writeBMPInfoHeader(FILE *outputFile, BitmapInfoHeader *infoHeader)
     {
         fwrite(&infoHeader->infoHeaderSize, sizeof(infoHeader->infoHeaderSize), 1,
@@ -118,6 +150,9 @@ public:
     }
 };
 
+/**
+ * Class that stores RGB data for colors and can store colors in certain index positions on a matrix
+ */
 class Painter
 {
 private:
@@ -143,6 +178,12 @@ private:
     uint8_t** rgbMatrix;
 
 public:
+    /**
+     * Constructor function
+     *
+     * @param width
+     * @param height
+     */
     Painter(int width, int height)
     {
         this->width = width;
@@ -165,10 +206,17 @@ public:
 
     }
 
-    void Paint(string color, int posX, int posY)
+    /**
+     *
+     * Allows storing a certain colored pixel information on a matrix
+     *
+     * @param color
+     * @param posX
+     * @param posY
+     */
+    void Paint(const string& color, int posX, int posY)
     {
         int position = (posX * width) + (posY);
-        //cout << position << endl;
 
         for (int i = 0; i < 3; i++) {
             if (color == "black") {
@@ -234,6 +282,12 @@ public:
         }
     }
 
+
+    /**
+     * Creates a matrix based on the RGB matrix data generated before in order to send it to the BMP writer class
+     *
+     * @param outputFileName
+     */
     void GenerateImage(string* outputFileName)
     {
         BitmapWriter bw{};
@@ -250,32 +304,3 @@ public:
         bw.write24BitBMP((const char *) outputFileName, width, height, (uint8_t*)(rgbData));
     }
 };
-
-/*
-int main() {
-    Painter p(4, 4);
-
-    p.Paint("black", 0,0);
-    p.Paint("white", 0,1);
-    p.Paint("white", 0,2);
-    p.Paint("black", 0,3);
-    p.Paint("black", 1,0);
-    p.Paint("black", 1,1);
-    p.Paint("black", 1,2);
-    p.Paint("black", 1,3);
-    p.Paint("black", 2,0);
-    p.Paint("black", 2,1);
-    p.Paint("black", 2,2);
-    p.Paint("black", 2,3);
-    p.Paint("black", 3,0);
-    p.Paint("black", 3,1);
-    p.Paint("black", 3,2);
-    p.Paint("black", 3,3);
-
-    auto *outputFileName = (string *) "newtest.bmp";
-
-    p.GenerateImage(outputFileName);
-
-    return 0;
-}
- */
